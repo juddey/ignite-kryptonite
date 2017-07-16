@@ -1,0 +1,25 @@
+/* ***********************************************************
+*  - You'll need to add this saga to sagas/index.js
+*  - This template uses the api declared in sagas/index.js, so
+*    you'll need to define a constant in that file.
+*************************************************************/
+
+import { call, put, select } from 'redux-saga/effects'
+import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
+
+// export const someData = state => state.some.data
+
+export function * get<%= camelCase(props.name) %> (api, action) {
+  const { data } = action
+  // make the call to the api
+  const response = yield call(api.get<%= props.name %>, data)
+
+  // success?
+  if (response.ok) {
+    // You might need to change the response here - do this with a 'transform',
+    // located in ../Transforms/. Otherwise, just pass the data back from the api.
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Success(response.data))
+  } else {
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure())
+  }
+}

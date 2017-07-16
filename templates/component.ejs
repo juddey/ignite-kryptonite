@@ -1,0 +1,37 @@
+import React from 'react'
+// import { Row, Col } from 'antd'
+import styles from './Styles/<%= props.name %>Style'
+
+export default class <%= props.name %> extends React.Component {
+
+//  constructor (props) {
+//    super(props)
+//    this.state = {
+//      something: props.something
+//    }
+//  }
+
+// componentWillReceiveProps (newProps) {
+//   this.setState({ something: newProps.something })
+// }
+
+
+  render () {
+    return (
+      <div style={styles.container}>
+        <div><%= props.name %> Component</div>
+      </div>
+    )
+  }
+}
+
+// // Prop type warnings
+// <%= props.name %>.propTypes = {
+//   someProperty: React.PropTypes.object,
+//   someSetting: React.PropTypes.bool.isRequired
+// }
+//
+// // Defaults for props
+// <%= props.name %>.defaultProps = {
+//   someSetting: false
+// }

@@ -1,0 +1,40 @@
+/* ***********************************************************
+* Wiring Instructions
+* To make this test work, you'll need to:
+*  - Add a Fixture named get<%= camelCase(props.name) %> to the
+*    ./App/Services/FixtureApi file. You can just keep adding
+*    functions to that file.
+*************************************************************/
+
+import FixtureAPI from '../../Services/FixtureApi'
+import { call, put, select } from 'redux-saga/effects'
+import { get<%= props.name %>, the<%= props.name %>Data } from '../../Sagas/<%= props.name %>Sagas'
+import <%= props.name %>Actions, { INITIAL_STATE } from '../../Redux/<%= props.name %>Redux'
+import R from 'ramda'
+
+const action = { type: '<%= props.name %>',  value: 'someValue' }
+const dataFixture = INITIAL_STATE.data
+
+it('posts - Server Returns an Error', () => {
+  let actual, response
+
+//  let saga = postWelcome(FixtureAPI, somePostAction)
+//  let data = R.clone(DataFixture)
+//  // Manipulate Inital State if needed
+    // data['firstName']['value'] = "John"
+    // Select the data from State
+//  actual = saga.next().value
+//  expect(actual).toEqual(select(the<%= props.name %>Data))
+
+//  // Set up for Call to Api
+// actual = saga.next(welcomeData).value
+// let formattedData = {"someKey": " " }
+// expect(actual).toEqual(call(FixtureAPI.postWelcome, formattedData))
+
+//   response = { ok: false, data: {
+//    errors: [{ detail: "Something went Bad Somewhere" }]
+//    } }
+
+//  actual = saga.next(response).value
+//  expect(actual).toEqual(put(<%= props.name %>Actions.<%= props.name %>Failure(response.data.errors)))
+})

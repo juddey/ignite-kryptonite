@@ -1,0 +1,47 @@
+import React from 'react'
+import { Row, Col, Form, Input } from 'antd'
+import R from 'ramda'
+import { connect } from 'react-redux'
+import { injectIntl } from 'react-intl'
+// Add Actions - replace 'Your' with whatever your reducer is called :)
+// import YourActions from '../Redux/YourRedux'
+import messages from './Messages/<%= props.name %>Messages'
+
+// Styles
+import styles from './Styles/<%= props.name %>Style'
+
+const FormItem = Form.Item;
+
+export class <%= props.name %> extends React.Component {
+
+  // constructor (props) {
+  //   super(props)
+  //   this.state = {}
+  // }
+
+  // componentWillReceiveProps (newProps) {
+  //  let processedData = this._mapErrorMessages(newProps.welcome.data)
+  //  this.setState(processedData)
+  // }
+
+  render () {
+    return (
+      <div style={styles.container}>
+        <div><%= props.name %> Container</div>
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  // console.log(state)
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(<%= props.name %>))

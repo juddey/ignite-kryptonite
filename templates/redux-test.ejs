@@ -1,0 +1,32 @@
+import Actions, { reducer, INITIAL_STATE } from '../../Redux/<%= props.name %>Redux'
+
+it('attempts', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Attempt())
+
+  expect(state.fetching).toBe(true)
+  expect(state.payload).toBe(null)
+})
+
+it('requests', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Request('data'))
+
+  expect(state.fetching).toBe(true)
+})
+
+it('success', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Success('hi'))
+
+  expect(state.payload).toBe('hi')
+})
+
+it('failure', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Failure())
+
+  expect(state.fetching).toBe(false)
+  expect(state.error).toBe(true)
+})
+
+it('data', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Data('jingoes'))
+  expect(state.data).toBe('jingoes')
+})
