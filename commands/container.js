@@ -1,7 +1,5 @@
 // @cliDescription  Generates a redux smart component.
 
-const patterns = require('../lib/patterns')
-
 module.exports = async function (context) {
   // grab some features
   const { parameters, strings, print, ignite, filesystem } = context
@@ -21,42 +19,68 @@ module.exports = async function (context) {
   const jobs = [
     {
       template: 'container.ejs',
-      target: `App/Containers/${name}.js`
+      target: `src/Containers/${name}.js`
     },
     {
       template: 'container-style.ejs',
-      target: `App/Containers/Styles/${name}Style.js`
+      target: `src/Containers/Styles/${name}Style.js`
+    },
+    {
+      template: 'container-test.ejs',
+      target: `src/__tests__/Containers/${name}Test.js`
+    },
+    {
+      template: 'container-messages.ejs',
+      target: `src/Containers/Messages/${name}Messages.js`
     }
   ]
 
+
   await ignite.copyBatch(context, jobs, props)
 
-  // if using `react-navigation` go the extra step
-  // and insert the container into the nav router
-  if (config.navigation === 'react-navigation') {
-    const containerName = name
-    const appNavFilePath = `${process.cwd()}/App/Navigation/AppNavigation.js`
-    const importToAdd = `import ${containerName} from '../Containers/${containerName}'`
-    const routeToAdd = `  ${containerName}: { screen: ${containerName} },`
+  const containerName = name
+  const indexFilePath = `${process.cwd()}/src/Containers/index.js`
+  const importToAdd = `import ${containerName} from './${containerName}'`
+  const exportToAdd = `  ${containerName},`
 
-    if (!filesystem.exists(appNavFilePath)) {
-      const msg = `No '${appNavFilePath}' file found.  Can't insert container.`
-      print.error(msg)
-      process.exit(1)
-    }
-
-    // insert container import
-    ignite.patchInFile(appNavFilePath, {
-      after: patterns[patterns.constants.PATTERN_IMPORTS],
-      insert: importToAdd
-    })
-
-    // insert container route
-    ignite.patchInFile(appNavFilePath, {
-      after: patterns[patterns.constants.PATTERN_ROUTES],
-      insert: routeToAdd
-    })
-  } else {
-    print.info('Container created, manually add it to your navigation')
+  if (!filesystem.exists(indexFilePath)) {
+    const msg = `No '${indexFilePath}' file found.  Can't add to index.js.`
+    print.error(msg)
+    process.exit(1)
   }
+
+  // insert container import
+  ignite.patchInFile(indexFilePath, {
+    after: "// Container Index",
+    insert: importToAdd
+  })
+
+  ignite.patchInFile(indexFilePath, {
+    after: "export {",
+    insert: exportToAdd
+  })
+
+// Example:
+//   const containerName = name
+//   const appNavFilePath = `${process.cwd()}/App/Navigation/AppNavigation.js`
+//   const importToAdd = `import ${containerName} from '../Containers/${containerName}'`
+//   const routeToAdd = `  ${containerName}: { screen: ${containerName} },`
+//
+//   if (!filesystem.exists(appNavFilePath)) {
+//     const msg = `No '${appNavFilePath}' file found.  Can't insert container.`
+//     print.error(msg)
+//     process.exit(1)
+//   }
+//
+//   // insert container import
+//   ignite.patchInFile(appNavFilePath, {
+//     after: patterns[patterns.constants.PATTERN_IMPORTS],
+//     insert: importToAdd
+//   })
+//
+//   // insert container route
+//   ignite.patchInFile(appNavFilePath, {
+//     after: patterns[patterns.constants.PATTERN_ROUTES],
+//     insert: routeToAdd
+//   })
 }

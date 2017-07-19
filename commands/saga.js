@@ -21,7 +21,7 @@ module.exports = async function (context) {
   if (tests) {
     jobs.push({
       template: `saga-test-${tests}.ejs`,
-      target: `Tests/Saga/${name}SagaTest.js`
+      target: `src/__tests__/Saga/${name}SagaTest.js`
     })
   }
 

@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { shallow } from 'enzyme'
+import { createComponentWithIntl, shallowWithIntl } from '../Utils'
 import <%= props.name %> from '../../Components/<%= props.name %>'
 import renderer from 'react-test-renderer'
 
 const div = document.createElement('div')
-const wrapper = shallow(<<%= props.name %> />)
+const wrapper = shallowWithIntl(<<%= props.name %> />)
 
 it('component exists', () => {
   expect(wrapper.length).toBe(1)
@@ -19,14 +19,14 @@ it('component structure', () => {
   expect(wrapper.children().first().containsMatchingElement('<%= props.name %> Component')).toBe(true)
 })
 
+it('renders to snapshot', () => {
+  const tree = createComponentWithIntl(
+      <<%= props.name %> />, div).toJSON()
+  expect(tree).toMatchSnapshot();
+})
+
 // it('should do some other things', () => {
 // const wrapper = shallow(<<%= props.name %> // SomeProps > )
    // You can add in props as shown above, or use the constant wrapper declared
    // at the top of the file.
 // })
-
-it('renders to snapshot', () => {
-  const tree = renderer.create(
-      <<%= props.name %> />, div).toJSON()
-  expect(tree).toMatchSnapshot();
-})

@@ -2,7 +2,7 @@
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, strings, print, ignite } = context
+  const { parameters, strings, print, ignite, filesystem } = context
   const { pascalCase, isBlank } = strings
   const config = ignite.loadIgniteConfig()
   const { tests } = config
@@ -20,17 +20,44 @@ module.exports = async function (context) {
   const jobs = [
     {
       template: 'component.ejs',
-      target: `App/Components/${name}.js`
+      target: `src/Components/${name}.js`
     },
     {
       template: 'component-style.ejs',
-      target: `App/Components/Styles/${name}Style.js`
+      target: `src/Components/Styles/${name}Style.js`
+    },
+    {
+      template: 'component-messages.ejs',
+      target: `src/Components/Messages/${name}Messages.js`
     },
     {
       template: 'component-test.ejs',
-      target: `Test/Components/${name}Test.js`
+      target: `src/__tests__/Components/${name}Test.js`
     }
   ]
 
   await ignite.copyBatch(context, jobs, props)
+
+  const componentName = name
+  const indexFilePath = `${process.cwd()}/src/Components/index.js`
+  const importToAdd = `import ${componentName} from './${componentName}'`
+  const exportToAdd = `  ${componentName},`
+
+  if (!filesystem.exists(indexFilePath)) {
+    const msg = `No '${indexFilePath}' file found.  Can't add to index.js.`
+    print.error(msg)
+    process.exit(1)
+  }
+
+  // insert container import
+  ignite.patchInFile(indexFilePath, {
+    after: "// Component Index",
+    insert: importToAdd
+  })
+
+  ignite.patchInFile(indexFilePath, {
+    after: "export {",
+    insert: exportToAdd
+  })
+
 }
