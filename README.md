@@ -21,10 +21,10 @@ Right, all of that said, here are some instructions to get you started:
 
 This repo assumes you're using [ant.design](https://ant.design/), but feel free to use whatever component prebuilts you like. Or roll your own. You'll just need to mod the templates to suit. If you do want to use ant.design, you'll need to follow these [instructions](https://ant.design/docs/react/use-with-create-react-app).
 
-###Modding Templates
+### Modding Templates
 Easy! Just modify the templates where you cloned the repo, run `ignite add ignite-electronite`, and you'll be up-to-date. This manual faffing about will all go away when this package is published to npm.
 
-#TODO
+### TODO
 - Write some tests. No, really. :)
 - Sort out a nested directory structure
 - Add a proper boilerplate for both web and electron projects
