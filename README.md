@@ -30,4 +30,4 @@ Easy! Just modify the templates where you cloned the repo, run `ignite add ignit
 - Add a proper boilerplate for both web and electron projects
 - Fix the install so we don't have to do the above
 - Remove the dependency on ant-design
-- Live long and prosper.
+- Live long and prosper. 🖖
