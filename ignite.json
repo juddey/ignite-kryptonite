@@ -3,5 +3,6 @@
     "component",
     "container",
     "saga",
-    "redux" ]
+    "redux",
+    "screen" ]
 }
