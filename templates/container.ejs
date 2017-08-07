@@ -10,10 +10,9 @@ import messages from './Messages/<%= props.name %>Messages'
 // Styles
 import styles from './Styles/<%= props.name %>Style'
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 export class <%= props.name %> extends React.Component {
-
   // constructor (props) {
   //   super(props)
   //   this.state = {}
@@ -24,7 +23,7 @@ export class <%= props.name %> extends React.Component {
   //  this.setState(processedData)
   // }
 
-  render () {
+  render() {
     return (
       <div style={styles.container}>
         <div><%= props.name %> Container</div>
@@ -33,15 +32,15 @@ export class <%= props.name %> extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   // console.log(state)
-  return {
-  }
+  return {}
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
+const mapDispatchToProps = dispatch => {
+  return {}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(<%= props.name %>))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  injectIntl(<%= props.name %>)
+)
