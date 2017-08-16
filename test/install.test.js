@@ -28,5 +28,6 @@ describe('Install', () => {
     f = jetpack.read('./package.json', 'json')
     expect(f['name']).toEqual(APP)
     expect(jetpack.list('node_modules').length).toBeGreaterThan(1)
+    expect(jetpack.exists('.git')).toBe('dir')
   })
 })

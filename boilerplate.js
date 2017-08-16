@@ -59,9 +59,10 @@ const {
   // copy our App & Tests directories
   spinner.text = '▸ copying boilerplate'
   spinner.start()
-  filesystem.copy(`${PLUGIN_PATH}/boilerplate/App`, `${APP_TEMP_PATH}/App`, {
-    overwrite: true
-  })
+  // Make src directory and stuff everything into it.
+  //filesystem.copy(`${PLUGIN_PATH}/boilerplate/App`, `${APP_TEMP_PATH}/App`, {
+  //  overwrite: true
+  //})
 
   spinner.text = 'copying boilerplate'
   spinner.stop().succeed()
@@ -117,30 +118,25 @@ const {
   // Cleanup
   filesystem.remove(`${APP_PATH}/ignite.js`)
   filesystem.remove(`${APP_PATH}/package.js`)
-
+  filesystem.remove(`${APP_PATH}/bob`)
   // console.log('Reading Path Ignite: ' + `${APP_TEMP_PATH}/ignite/ignite.json`)
   // console.log(filesystem.read(`${APP_TEMP_PATH}/ignite/ignite.json`))
 
+  // initialize git
+  const gitExists = await filesystem.exists('.git')
+  if (!gitExists && !parameters.options['skip-git'] && system.which('git')) {
+    spinner.text = 'setting up git'
+    spinner.start()
+    await system.run('git init . && git add . && git commit -m "Initial commit."')
+    spinner.succeed()
+  }
+
+  print.info('')
+  print.info('🍽 Installed!')
+  print.info('')
+  print.info(print.colors.yellow(`  cd ${name}`))
+  print.info(print.colors.yellow('  react-native run-ios'))
 
  }
-
-//  // initialize git
-//  const gitExists = await filesystem.exists('.git')
-//  if (!gitExists && !parameters.options['skip-git'] && system.which('git')) {
-//    spinner.text = 'setting up git'
-//    spinner.start()
-//    await system.run('git init . && git add . && git commit -m "Initial commit."')
-//    spinner.succeed()
-//  }
-//
-//  // Wrap it up with our success message.
-//  print.info('')
-//  print.info('🍽 Installed!')
-//  print.info('')
-//  print.info(print.colors.yellow(`  cd ${name}`))
-//  print.info(print.colors.yellow('  react-native run-ios'))
-//  print.info(print.colors.yellow('  react-native run-android'))
-//  print.info('')
-
 
 module.exports = { install }
