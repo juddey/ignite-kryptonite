@@ -1,4 +1,3 @@
-const options = require('./options')
 /**
  * This file provides an `install` function that should install React Native,
  * copy over any folders and template files, and install any desired plugins.
