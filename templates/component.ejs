@@ -1,5 +1,5 @@
 import React from 'react'
-// import { Row, Col } from 'antd'
+import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './Messages/<%= props.name %>Messages'
 import styles from './Styles/<%= props.name %>Style'
@@ -27,10 +27,20 @@ export default class <%= props.name %> extends React.Component {
   }
 }
 
+
+// react-intl Messages, outside of FormatMessage
+// https://stackoverflow.com/questions/35186297/how-to-retrieve-a-string-in-reactintl-2-0-without-using-formattedmessage/39161208#39161208
+// If you can't use <FormattedMessage /> for some reason, you can use this
+// syntax: `this.context.intl.formatMessage({ ...messages.default })`
+// by uncommenting the next block.
+//  <%= props.name %>.contextTypes = {
+//   intl: PropTypes.object.isRequired
+// }
+
 // // Prop type warnings
 // <%= props.name %>.propTypes = {
-//   someProperty: React.PropTypes.object,
-//   someSetting: React.PropTypes.bool.isRequired
+//   someProperty: PropTypes.object,
+//   someSetting: PropTypes.bool.isRequired
 // }
 //
 // // Defaults for props

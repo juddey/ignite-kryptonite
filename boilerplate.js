@@ -39,22 +39,22 @@ const {
   filesystem.remove(`${APP_PATH}/node_modules/ignite-electronite/.git`)
 
   // install create react app
-  spinner.text = '▸ installing create-react-app'
+  spinner.text = '▸ installing Create React App'
   spinner.start()
-  spinner.text = 'installing create-react-app'
+  spinner.text = 'installed Create React App'
   await system.run('npm install create-react-app')
   spinner.stop().succeed()
 
   spinner.text = '▸ Running Create React App'
   spinner.start()
   await system.run('node ./node_modules/create-react-app bob')
-  spinner.text = 'Running Create React App'
 
   //Next Step. Need to move everything from 'bob' into the project root.
   filesystem.copy(`${APP_PATH}/bob`, `${APP_TEMP_PATH}/`, {
     matching: '**',
     overwrite: true
   })
+  spinner.text = ` Made a new React App called ${name}`
   spinner.stop().succeed()
   // copy our App & Tests directories
   spinner.text = '▸ copying boilerplate'
@@ -64,7 +64,7 @@ const {
   //  overwrite: true
   //})
 
-  spinner.text = 'copying boilerplate'
+  spinner.text = 'copied boilerplate'
   spinner.stop().succeed()
 
   // generate some templates

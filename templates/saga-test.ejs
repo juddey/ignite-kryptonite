@@ -1,11 +1,60 @@
 import FixtureAPI from '../../Services/FixtureApi'
 import { call, put, select } from 'redux-saga/effects'
-import { get<%= props.name %>, post<%= props.name %>,  edit<%= props.name %>, delete<%= props.name %> } from '../../Sagas/<%= props.name %>Sagas'
+import { get<%= props.name %>,
+  get<%= props.name %>s,
+  post<%= props.name %>,
+  update<%= props.name %>,
+  remove<%= props.name %>
+} from '../../Sagas/<%= props.name %>Sagas'
 import <%= props.name %>Actions, { INITIAL_STATE } from '../../Redux/<%= props.name %>Redux'
 import R from 'ramda'
+import { mapAttributes, getAttributes } from '../../Transforms/TransformAttributes'
 
 const action = { type: '<%= props.name %>',  data: { someKey: 'someValue' } }
 const dataFixture = INITIAL_STATE.data
+
+it ('calls the index action', () => {
+  let actual, response
+
+  let saga = get<%= props.name %>s(FixtureAPI, action)
+
+  actual = saga.next(action.data).value
+  expect(actual).toEqual(call(FixtureAPI.get<%= pascalCase(props.name) %>s, action.data))
+  response = {
+    ok: true,
+    data: { data: { attributes: { something: 'someValue' } } }
+  }
+
+  actual = saga.next(response).value
+  expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>AllSuccess(mapAttributes(response.data))))
+
+  expect(saga.next().done).toEqual(true)
+})
+
+it ('calls the index action, but fails', () => {
+  let actual, response
+
+  let saga = get<%= props.name %>s(FixtureAPI, action)
+
+  actual = saga.next(action.data).value
+  expect(actual).toEqual(call(FixtureAPI.get<%= pascalCase(props.name) %>s, action.data))
+
+  response = {
+    ok: false,
+    data: {
+      errors: [{ detail: 'An error goes here' }]
+    }
+  }
+
+  actual = saga.next(response).value
+  expect(actual).toEqual(
+    put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure(response.data.errors))
+  )
+
+  expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure(response.data.errors)))
+  expect(saga.next().done).toEqual(true)
+})
+
 
 it('posts successfully', () => {
   let actual, response
@@ -17,7 +66,9 @@ it('posts successfully', () => {
   response = { ok: true, data: { someKey: 'someValue'}}
 
   actual = saga.next(response).value
-  expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>Success(response.data)))
+  expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>SingleSuccess(response.data)))
+
+  expect(saga.next().done).toEqual(true)
 })
 
 it('posts, but the server returns an error', () => {
@@ -34,4 +85,6 @@ it('posts, but the server returns an error', () => {
 
   actual = saga.next(response).value
   expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure(response.data.errors)))
+
+  expect(saga.next().done).toEqual(true)
 })

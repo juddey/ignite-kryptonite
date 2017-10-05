@@ -35,7 +35,6 @@ module.exports = async function (context) {
     }
   ]
 
-
   await ignite.copyBatch(context, jobs, props)
 
   const containerName = name

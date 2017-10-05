@@ -13,10 +13,47 @@ it('requests', () => {
   expect(state.fetching).toBe(true)
 })
 
+it('updates', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Update('data'))
+
+  expect(state.fetching).toBe(true)
+  expect(state.payload).toBe(null)
+})
+
+it('removes', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Remove('data'))
+
+  expect(state.fetching).toBe(true)
+  expect(state.payload).not.toBe
+})
+
+it('gets All Records', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>All('data'))
+
+  expect(state.fetching).toBe(true)
+  expect(state.payload).toBe(null)
+})
+
 it('success', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Success('hi'))
 
   expect(state.payload).toBe('hi')
+})
+
+it('success - single', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>SingleSuccess('hi'))
+
+  expect(state.payload).toEqual('hi')
+  expect(state.single).toEqual('hi')
+  expect(state.multi).toEqual(null)
+})
+
+it('success - all', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>AllSuccess('hi'))
+
+  expect(state.payload).toEqual('hi')
+  expect(state.single).toEqual(null)
+  expect(state.multi).toEqual('hi')
 })
 
 it('failure', () => {

@@ -7,16 +7,14 @@ const APP = 'IntegrationTest'
 const BOILERPLATE = `${__dirname}/..`
 
 // calling the ignite cli takes a while
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 6000000
 
 describe('generators', () => {
   beforeAll(async () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
-    await jetpack.dirAsync(APP)
+    await execa(IGNITE, ['new', `${APP}`, '-b', 'ignite-electronite'])
     process.chdir(APP)
-    await execa(IGNITE, ['attach'])
-    await execa(IGNITE, ['add', 'ignite-electronite'])
   })
 
   fit('generates a component', async () => {

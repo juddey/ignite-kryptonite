@@ -1,6 +1,10 @@
-## Ignite Electronite
+## Ignite Kryptonite
+
+Because you shouldn't need to be Superman (or Wonderwoman) to write an application.
 
 Ignite for your next cool electron thing. Conincidentally, also works _sweet as_ on single page based web projects, as they share many of the same concepts.
+
+Writing a react web is hard. So many choices. Then fitting them all together.
 
 ## Warning!!!!
 Warning! Warning! ~~Beta~~ ~~Alpha~~ pre-Alpha Software, breaking changes, frequent crashes, lots of bugs, all that stuff. Might not work in your use case, but I'm pretty sure it [WOMM](http://www.urbandictionary.com/define.php?term=WOMM).

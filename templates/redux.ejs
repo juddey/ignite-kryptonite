@@ -4,10 +4,15 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  <%= camelCase(props.name) %>Attempt: ['data'],
   <%= camelCase(props.name) %>Request: ['data'],
+  <%= camelCase(props.name) %>Attempt: ['data'],
+  <%= camelCase(props.name) %>Update: ['data'],
+  <%= camelCase(props.name) %>Remove: ['data'],
+  <%= camelCase(props.name) %>All: ['data'],
   <%= camelCase(props.name) %>Data: ['data'],
   <%= camelCase(props.name) %>Success: ['payload'],
+  <%= camelCase(props.name) %>SingleSuccess: ['payload'],
+  <%= camelCase(props.name) %>AllSuccess: ['payload'],
   <%= camelCase(props.name) %>Failure: null
 })
 
@@ -22,6 +27,8 @@ export const INITIAL_STATE = Immutable({
   },
   fetching: null,
   payload: null,
+  single: null,
+  multi: null,
   error: null
 })
 
@@ -35,10 +42,28 @@ export const request = (state, { data }) =>
 export const attempt = (state) =>
   state.merge({ fetching: true, payload: null })
 
+// or, Update it.
+export const update = (state, { data }) =>
+  state.merge({ fetching: true, data  })
+
+// or, Delete it.
+export const remove = (state) =>
+  state.merge({ fetching: true })
+
 // successful api lookup
 export const success = (state, action) => {
   const { payload } = action
   return state.merge({ fetching: false, error: null, payload })
+}
+
+export const singleSuccess = (state, action) => {
+  const { payload } = action
+  return state.merge({ fetching: false, error: null, payload, single: payload })
+}
+
+export const allSuccess = (state, action) => {
+  const { payload } = action
+  return state.merge({ fetching: false, error: null, payload, multi: payload })
 }
 
 // Something went wrong somewhere.
@@ -52,9 +77,14 @@ export const data = (state, { data }) =>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.<%= snakeCase(props.name).toUpperCase() %>_ATTEMPT]: attempt,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_REQUEST]: request,
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_ATTEMPT]: attempt,
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_UPDATE]: update,
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_REMOVE]: remove,
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_ALL]: request,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_DATA]: data,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_SUCCESS]: success,
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_SINGLE_SUCCESS]: singleSuccess,
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_ALL_SUCCESS]: allSuccess,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_FAILURE]: failure
 })
