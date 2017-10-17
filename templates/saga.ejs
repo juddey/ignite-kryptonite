@@ -1,8 +1,14 @@
 import { call, put, select } from 'redux-saga/effects'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
-import { getAttributes, mapAttributes } from '../Transforms/TransformAttributes'
+import { getAttributes, mapAttributes, updateMulti } from '../Transforms/TransformAttributes'
+import { merge } from 'ramda'
+import { showSagaMessage } from '../Translations/SagaMessages'
+// import history from '../Services/BrowserHistory'
 
-// export const someData = state => state.some.data
+export const theData = state => state.some.data
+export const theMulti = state => state.some.multi
+export const theUserPrefs = state => state.user.preferences
+export const transformedData = response => getAttributes(response.data)
 
 export function * get<%= pascalCase(props.name) %> (api, action) {
   const { data } = action
@@ -14,6 +20,8 @@ export function * get<%= pascalCase(props.name) %> (api, action) {
     // You might need to change the response here - do this with a 'transform',
     // located in ../Transforms/. Otherwise, just pass the data back from the api.
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Success(response.data))
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Data(transformedData(response)))
+    // history.push('/path/to/some/url' + data, { type: <%= props.name %>  })
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure())
   }
@@ -35,13 +43,23 @@ export function * post<%= pascalCase(props.name) %> (api, action) {
 export function * update<%= pascalCase(props.name) %> (api, action) {
   const { data } = action
   // make the call to the api
-  const response = yield call(api.patch<%= props.name %>, data)
+  const params = yield select(theData)
+  const response = yield call(api.update<%= props.name %>, merge(data, params))
 
   // success?
   if (response.ok) {
-    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Success(response.data))
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>SingleSuccess(transformedData(response)))
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Data(transformedData(response)))
+    const multi = yield select(theMulti)
+    yield put(
+      <%= props.name %>Actions.<%= camelCase(props.name) %>AllSuccess(
+        updateMulti(transformedData(response), multi)
+      )
+    )
+    yield call(showSagaMessage, 'saved')
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure())
+    yield call(showSagaMessage, 'error')
   }
 }
 

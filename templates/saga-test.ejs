@@ -4,11 +4,15 @@ import { get<%= props.name %>,
   get<%= props.name %>s,
   post<%= props.name %>,
   update<%= props.name %>,
-  remove<%= props.name %>
+  remove<%= props.name %>,
+  theData,
+  theUserPrefs,
+  transformedData,
+  theMulti
 } from '../../Sagas/<%= props.name %>Sagas'
 import <%= props.name %>Actions, { INITIAL_STATE } from '../../Redux/<%= props.name %>Redux'
-import R from 'ramda'
-import { mapAttributes, getAttributes } from '../../Transforms/TransformAttributes'
+import { mapAttributes, updateMulti } from '../../Transforms/TransformAttributes'
+import { getMessage, showSagaMessage } from '../../Translations/SagaMessages'
 
 const action = { type: '<%= props.name %>',  data: { someKey: 'someValue' } }
 const dataFixture = INITIAL_STATE.data
@@ -85,6 +89,71 @@ it('posts, but the server returns an error', () => {
 
   actual = saga.next(response).value
   expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure(response.data.errors)))
+
+  expect(saga.next().done).toEqual(true)
+})
+
+it('patches/edits successfully', () => {
+  let actual, response
+
+  let saga = update<%= props.name %>(FixtureAPI, action)
+
+  actual = saga.next().value
+  expect(actual).toEqual(select(theData))
+
+
+  actual = saga.next(action.data).value
+  expect(actual).toEqual(call(FixtureAPI.update<%= pascalCase(props.name) %>, action.data))
+  response = { ok: true, data: { data: { attributes: { id: 'someValue' } } } }
+
+
+  actual = saga.next(response).value
+  expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>SingleSuccess(transformedData(response))))
+
+  actual = saga.next(response).value
+  expect(actual).toEqual(
+    put(<%= props.name %>Actions.<%= camelCase(props.name) %>Data(transformedData(response)))
+  )
+
+  actual = saga.next().value
+  expect(actual).toEqual(select(theMulti))
+
+  let multi = [{ id: 'someValue' }]
+  actual = saga.next(multi).value
+  expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>AllSuccess(updateMulti(transformedData(response), multi))))
+
+  actual = saga.next(response).value
+  expect(actual).toEqual(call(showSagaMessage, 'saved'))
+
+  expect(saga.next().done).toEqual(true)
+})
+
+
+it('patches/edits but fails with server error', () => {
+  let actual, response
+
+  let saga = update<%= props.name %>(FixtureAPI, action)
+
+  actual = saga.next().value
+  expect(actual).toEqual(select(theData))
+
+  actual = saga.next(action.data).value
+  expect(actual).toEqual(call(FixtureAPI.update<%= pascalCase(props.name) %>, action.data))
+
+  response = {
+    ok: false,
+    data: {
+      errors: [{ detail: 'An error goes here' }]
+    }
+  }
+
+  actual = saga.next(response).value
+  expect(actual).toEqual(
+    put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure(response.data.errors))
+  )
+
+  actual = saga.next(response).value
+  expect(actual).toEqual(call(showSagaMessage, 'error'))
 
   expect(saga.next().done).toEqual(true)
 })
