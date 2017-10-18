@@ -19,9 +19,9 @@ export function * get<%= pascalCase(props.name) %> (api, action) {
   if (response.ok) {
     // You might need to change the response here - do this with a 'transform',
     // located in ../Transforms/. Otherwise, just pass the data back from the api.
-    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Success(response.data))
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>SingleSuccess(transformedData(response)))
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Data(transformedData(response)))
-    // history.push('/path/to/some/url' + data, { type: <%= props.name %>  })
+    // history.push('/path/to/some/url' + data.id, { type: '<%= lowerCase(props.name) %>'  })
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure())
   }
@@ -35,6 +35,7 @@ export function * post<%= pascalCase(props.name) %> (api, action) {
   // success?
   if (response.ok) {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>SingleSuccess(response.data))
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Data(transformedData(response)))
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure())
   }
