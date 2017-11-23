@@ -19,10 +19,10 @@ module.exports = async function (context) {
   const lowerName = lowerCase(parameters.first)
   const props = { name, upperName, initCapName }
 
-  const jobs = [{ template: `saga.ejs`, target: `src/Sagas/${name}Sagas.js` }]
+  const jobs = [{ template: `crud-saga.ejs`, target: `src/Sagas/${name}Sagas.js` }]
   if (config.tests) {
     jobs.push({
-      template: `saga-test.ejs`,
+      template: `crud-saga-test.ejs`,
       target: `src/__tests__/Sagas/${name}SagaTest.js`
     })
   }
@@ -91,10 +91,7 @@ module.exports = async function (context) {
     process.exit(1)
   }
 
-  ignite.patchInFile(apiFilePath, {
-    after: "// Define API Constants",
-    insert: crudToAdd
-  })
+  ignite.patchsaga
 
   ignite.patchInFile(apiFilePath, {
     after: "return {",

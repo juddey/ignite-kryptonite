@@ -2,6 +2,7 @@
   "generators": [
     "component",
     "container",
+    "crudsaga",
     "saga",
     "redux",
     "screen" ]
