@@ -14,7 +14,7 @@ describe('Install', () => {
   beforeAll(async () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
-    await execa(IGNITE, ['new', `${APP}`, '-b', 'ignite-electronite'])
+    await execa(IGNITE, ['new', `${APP}`, '-b', 'ignite-kryptonite'])
     process.chdir(APP)
   })
 

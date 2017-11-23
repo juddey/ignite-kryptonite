@@ -1,12 +1,12 @@
 import { call, put, select } from 'redux-saga/effects'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
-import { getAttributes, mapAttributes, updateMulti } from '../Transforms/TransformAttributes'
+import { getAttributes, mapAttributes, updateMulti, insertMulti } from '../Transforms/TransformAttributes'
 import { merge } from 'ramda'
 import { showSagaMessage } from '../Translations/SagaMessages'
 // import history from '../Services/BrowserHistory'
 
-export const theData = state => state.some.data
-export const theMulti = state => state.some.multi
+export const theData = state => state.<%= lowerCase(props.name) %>.data
+export const theMulti = state => state.<%= lowerCase(props.name) %>.multi
 export const theUserPrefs = state => state.user.preferences
 export const transformedData = response => getAttributes(response.data)
 
@@ -34,10 +34,18 @@ export function * post<%= pascalCase(props.name) %> (api, action) {
 
   // success?
   if (response.ok) {
-    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>SingleSuccess(response.data))
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>SingleSuccess(transformedData(response)))
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Data(transformedData(response)))
+    const multi = yield select(theMulti)
+    yield put(
+      <%= props.name %>Actions.<%= camelCase(props.name) %>AllSuccess(
+        insertMulti(transformedData(response), multi)
+      )
+    )
+    yield call(showSagaMessage, 'saved')
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure())
+    yield call(showSagaMessage, 'error')
   }
 }
 
@@ -85,6 +93,7 @@ export function * get<%= pascalCase(props.name) %>s (api, action) {
   // success?
   if (response.ok) {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>AllSuccess(mapAttributes(response.data)))
+    // history.push('/path/to/some/url')
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name)   %>Failure())
   }

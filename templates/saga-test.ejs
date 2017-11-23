@@ -11,8 +11,9 @@ import { get<%= props.name %>,
   theMulti
 } from '../../Sagas/<%= props.name %>Sagas'
 import <%= props.name %>Actions, { INITIAL_STATE } from '../../Redux/<%= props.name %>Redux'
-import { mapAttributes, updateMulti } from '../../Transforms/TransformAttributes'
+import { mapAttributes, updateMulti, insertMulti } from '../../Transforms/TransformAttributes'
 import { getMessage, showSagaMessage } from '../../Translations/SagaMessages'
+import { okIDResponse } from '../Fixtures/Shared'
 
 const action = { type: '<%= props.name %>',  data: { someKey: 'someValue' } }
 const dataFixture = INITIAL_STATE.data
@@ -67,10 +68,24 @@ it('posts successfully', () => {
 
   actual = saga.next(action.data).value
   expect(actual).toEqual(call(FixtureAPI.post<%= pascalCase(props.name) %>, action.data))
-  response = { ok: true, data: { someKey: 'someValue'}}
 
-  actual = saga.next(response).value
-  expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>SingleSuccess(response.data)))
+  actual = saga.next(okIDResponse).value
+  expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>SingleSuccess(transformedData(okIDResponse))))
+
+  actual = saga.next(okIDResponse).value
+  expect(actual).toEqual(
+    put(<%= props.name %>Actions.<%= camelCase(props.name) %>Data(transformedData(okIDResponse)))
+  )
+
+  actual = saga.next().value
+  expect(actual).toEqual(select(theMulti))
+
+  let multi = [{ id: 'aValue', name: 'aSomething' }]
+  actual = saga.next(multi).value
+  expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>AllSuccess(insertMulti(transformedData(okIDResponse), multi))))
+
+  actual = saga.next().value
+  expect(actual).toEqual(call(showSagaMessage, 'saved'))
 
   expect(saga.next().done).toEqual(true)
 })
@@ -89,6 +104,9 @@ it('posts, but the server returns an error', () => {
 
   actual = saga.next(response).value
   expect(actual).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure(response.data.errors)))
+
+  actual = saga.next().value
+  expect(actual).toEqual(call(showSagaMessage, 'error'))
 
   expect(saga.next().done).toEqual(true)
 })

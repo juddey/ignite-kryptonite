@@ -1,6 +1,6 @@
 {
-  "name": "ignite-electronite",
-  "description": "Cook up an ignite flavoured electron project.",
+  "name": "ignite-kryptonite",
+  "description": "Cook up an ignite flavoured web project.",
   "version": "0.0.1",
   "license": "MIT",
   "author": {
@@ -28,7 +28,7 @@
     ]
   },
   "url": "https://example.com/path/to/your/plugin",
-  "repository": "juddey/ignite-electronite",
+  "repository": "juddey/ignite-kryptonite",
   "devDependencies": {
     "babel-eslint": "^7.1.1",
     "fs-jetpack": "^1.1.0",

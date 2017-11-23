@@ -32,7 +32,7 @@ const {
 
 
   const spinner = print
-    .spin(`using the ${print.colors.cyan('Electronite')} boilerplate`)
+    .spin(`using the ${print.colors.cyan('Kryptonite')} boilerplate`)
     .succeed()
 
   // just need this while we're not on npm

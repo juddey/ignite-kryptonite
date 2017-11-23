@@ -43,8 +43,8 @@ export const attempt = (state) =>
   state.merge({ fetching: true, payload: null })
 
 // or, Update it.
-export const update = (state, { data }) =>
-  state.merge({ fetching: true, data  })
+export const update = (state) =>
+  state.merge({ fetching: true, payload: null })
 
 // or, Delete it.
 export const remove = (state) =>
