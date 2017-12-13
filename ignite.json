@@ -3,6 +3,7 @@
     "component",
     "container",
     "crudsaga",
+    "crudredux",
     "saga",
     "redux",
     "screen" ]
