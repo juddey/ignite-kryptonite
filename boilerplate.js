@@ -23,21 +23,15 @@ const {
     template
   } = context
 
-
   const APP_PATH = process.cwd()
   const PLUGIN_PATH = __dirname
   const name = parameters.third
   const APP_TEMP_PATH = `${APP_PATH}/${name}`
-  console.log(PLUGIN_PATH)
-
 
   const spinner = print
     .spin(`using the ${print.colors.cyan('Kryptonite')} boilerplate`)
     .succeed()
-
-  // just need this while we're not on npm
-  filesystem.remove(`${APP_PATH}/node_modules/ignite-electronite/.git`)
-
+  
   // install create react app
   spinner.text = '▸ installing Create React App'
   spinner.start()
@@ -45,7 +39,7 @@ const {
   await system.run('npm install create-react-app')
   spinner.stop().succeed()
 
-  spinner.text = '▸ Running Create React App'
+  spinner.text = '▸ Running Create React App (60 seconds-ish :)'
   spinner.start()
   await system.run('node ./node_modules/create-react-app bob')
 
@@ -54,15 +48,36 @@ const {
     matching: '**',
     overwrite: true
   })
-  spinner.text = ` Made a new React App called ${name}`
+  spinner.text = `Made a new React App called ${name}`
   spinner.stop().succeed()
-  // copy our App & Tests directories
-  spinner.text = '▸ copying boilerplate'
+
+  // Make me an ignite project :fire:
+  spinner.text = '▸ Attaching ignite'
   spinner.start()
-  // Make src directory and stuff everything into it.
-  //filesystem.copy(`${PLUGIN_PATH}/boilerplate/App`, `${APP_TEMP_PATH}/App`, {
-  //  overwrite: true
-  //})
+
+   try {
+     await system.spawn(`ignite attach`)
+    } catch (e) {
+      ignite.log(e)
+      throw e
+    }
+
+  spinner.text = `Woot!  ${name} has been ignite-ified`
+  spinner.stop().succeed()
+
+  // copy our App & Tests directories
+  spinner.text = '▸ installing boilerplate'
+  // spinner.start()
+
+  // have another go at installing the boilerplate, because CRA toasts it :bread:
+  try {
+    // pass along the debug flag if we're running in that mode
+    const debugFlag = parameters.options.debug ? '--debug' : ''
+    await system.spawn(`ignite add ignite-kryptonite ${debugFlag}`, { stdio: 'inherit' })
+    } catch (e) {
+      ignite.log(e)
+      throw e
+    }
 
   spinner.text = 'copied boilerplate'
   spinner.stop().succeed()
@@ -88,8 +103,6 @@ const {
   filesystem.copy(`${APP_PATH}/ignite.js`, `${APP_TEMP_PATH}/ignite/ignite.json`, {
     overwrite: true
   })
-
-
   spinner.text = 'generating files from templates'
 
   spinner.stop().succeed();
@@ -135,7 +148,7 @@ const {
   print.info('🍽 Installed!')
   print.info('')
   print.info(print.colors.yellow(`  cd ${name}`))
-  print.info(print.colors.yellow('  react-native run-ios'))
+  print.info(print.colors.yellow('  yarn start'))
 
  }
 
