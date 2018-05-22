@@ -13,14 +13,12 @@
  * @param {any} context - The gluegun context. Docs: https://infinitered.github.io/gluegun/#/context-api.md
  */
 async function install (context) {
-
-const {
+  const {
     filesystem,
     parameters,
     ignite,
     print,
-    system,
-    template
+    system
   } = context
 
   const APP_PATH = process.cwd()
@@ -31,7 +29,7 @@ const {
   const spinner = print
     .spin(`using the ${print.colors.cyan('Kryptonite')} boilerplate`)
     .succeed()
-  
+
   // install create react app
   spinner.text = '▸ installing Create React App'
   spinner.start()
@@ -43,7 +41,7 @@ const {
   spinner.start()
   await system.run('node ./node_modules/create-react-app bob')
 
-  //Next Step. Need to move everything from 'bob' into the project root.
+  // Next Step. Need to move everything from 'bob' into the project root.
   filesystem.copy(`${APP_PATH}/bob`, `${APP_TEMP_PATH}/`, {
     matching: '**',
     overwrite: true
@@ -55,12 +53,12 @@ const {
   spinner.text = '▸ Attaching ignite'
   spinner.start()
 
-   try {
-     await system.spawn(`ignite attach`)
-    } catch (e) {
-      ignite.log(e)
-      throw e
-    }
+  try {
+    await system.spawn(`ignite attach`)
+  } catch (e) {
+    ignite.log(e)
+    throw e
+  }
 
   spinner.text = `Woot!  ${name} has been ignite-ified`
   spinner.stop().succeed()
@@ -74,10 +72,10 @@ const {
     // pass along the debug flag if we're running in that mode
     const debugFlag = parameters.options.debug ? '--debug' : ''
     await system.spawn(`ignite add ignite-kryptonite ${debugFlag}`, { stdio: 'inherit' })
-    } catch (e) {
-      ignite.log(e)
-      throw e
-    }
+  } catch (e) {
+    ignite.log(e)
+    throw e
+  }
 
   spinner.text = 'copied boilerplate'
   spinner.stop().succeed()
@@ -85,27 +83,27 @@ const {
   // generate some templates
   spinner.text = '▸ generating files from templates'
   spinner.start()
-   const templates = [
+  const templates = [
      { template: 'index.js.ejs', target: 'index.js' },
      { template: 'ignite/ignite.json.ejs', target: `ignite.js` },
      { template: 'package.json.ejs', target: `package.js` }
-   ]
+  ]
 
-   await ignite.copyBatch(context, templates, { name: name, igniteVersion: ignite.version }, {
-     directory: `${PLUGIN_PATH}/boilerplate`,
-     quiet: true
-   })
+  await ignite.copyBatch(context, templates, { name: name, igniteVersion: ignite.version }, {
+    directory: `${PLUGIN_PATH}/boilerplate`,
+    quiet: true
+  })
 
   filesystem.copy(`${APP_PATH}/package.js`, `${APP_TEMP_PATH}/package.json`, {
-     overwrite: true
-   })
+    overwrite: true
+  })
 
   filesystem.copy(`${APP_PATH}/ignite.js`, `${APP_TEMP_PATH}/ignite/ignite.json`, {
     overwrite: true
   })
   spinner.text = 'generating files from templates'
 
-  spinner.stop().succeed();
+  spinner.stop().succeed()
 
   process.chdir(name)
 
@@ -115,7 +113,6 @@ const {
   spinner.text = 'installing dependencies with yarn'
   spinner.stop().succeed()
 
-
   // install any plugins, including ourselves if we have generators.
   // please note you should always do `stdio: 'inherit'` or it'll hang
 
@@ -123,10 +120,10 @@ const {
     // pass along the debug flag if we're running in that mode
     const debugFlag = parameters.options.debug ? '--debug' : ''
     await system.spawn(`ignite add ${__dirname} ${debugFlag}`, { stdio: 'inherit' })
-    } catch (e) {
-      ignite.log(e)
-      throw e
-    }
+  } catch (e) {
+    ignite.log(e)
+    throw e
+  }
 
   // Cleanup
   filesystem.remove(`${APP_PATH}/ignite.js`)
@@ -149,7 +146,6 @@ const {
   print.info('')
   print.info(print.colors.yellow(`  cd ${name}`))
   print.info(print.colors.yellow('  yarn start'))
-
- }
+}
 
 module.exports = { install }
