@@ -51,13 +51,12 @@ module.exports = async function (context) {
 
   // insert container import
   ignite.patchInFile(indexFilePath, {
-    after: "// Component Index",
+    after: '// Component Index',
     insert: importToAdd
   })
 
   ignite.patchInFile(indexFilePath, {
-    after: "export {",
+    after: 'export {',
     insert: exportToAdd
   })
-
 }

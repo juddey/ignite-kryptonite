@@ -35,7 +35,6 @@ module.exports = async function (context) {
     }
   ]
 
-
   await ignite.copyBatch(context, jobs, props)
 
   const containerName = name
@@ -51,12 +50,12 @@ module.exports = async function (context) {
 
   // insert container import
   ignite.patchInFile(indexFilePath, {
-    after: "// Container Index",
+    after: '// Container Index',
     insert: importToAdd
   })
 
   ignite.patchInFile(indexFilePath, {
-    after: "export {",
+    after: 'export {',
     insert: exportToAdd
   })
 

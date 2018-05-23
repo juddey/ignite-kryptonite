@@ -38,7 +38,7 @@ module.exports = async function (context) {
   await ignite.copyBatch(context, jobs, props)
 
   const containerName = name
-  const routeName = lowerCase(name).slice(-6) === 'screen' ?  lowerCase(name).substr(0, (name.length -6)) : lowerCase(name)
+  const routeName = lowerCase(name).slice(-6) === 'screen' ? lowerCase(name).substr(0, (name.length - 6)) : lowerCase(name)
   const indexFilePath = `${process.cwd()}/src/Containers/index.js`
   const importToAdd = `import ${containerName} from './${containerName}'`
   const exportToAdd = `  ${containerName},`
@@ -54,12 +54,12 @@ module.exports = async function (context) {
 
   // insert container import
   ignite.patchInFile(indexFilePath, {
-    after: "// Container Index",
+    after: '// Container Index',
     insert: importToAdd
   })
 
   ignite.patchInFile(indexFilePath, {
-    after: "export {",
+    after: 'export {',
     insert: exportToAdd
   })
 
@@ -70,16 +70,15 @@ module.exports = async function (context) {
   }
 
   ignite.patchInFile(navPath, {
-    after: "<div>",
+    after: '<div>',
     insert: routeToAdd
   })
 
   // import into the router file too
   ignite.patchInFile(navPath, {
-    before: "RootScreen",
+    before: 'RootScreen',
     insert: `  ${containerName},`
   })
-
 
 // Example:
 //   const containerName = name

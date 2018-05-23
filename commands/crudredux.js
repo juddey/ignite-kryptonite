@@ -42,10 +42,9 @@ module.exports = async function (context) {
 
   // insert redux require
   ignite.patchInFile(indexFilePath, {
-    after: "const rootReducer = combineReducers",
+    after: 'const rootReducer = combineReducers',
     insert: toAdd
   })
-
 
   if (!filesystem.exists(sagaFilePath)) {
     const msg = `No '${sagaFilePath}' file found.  Can't add to index.js.`
@@ -55,8 +54,7 @@ module.exports = async function (context) {
 
   // insert saga import
   ignite.patchInFile(sagaFilePath, {
-    after: "// Types",
+    after: '// Types',
     insert: importToAdd
   })
-
 }

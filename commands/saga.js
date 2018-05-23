@@ -47,15 +47,14 @@ module.exports = async function (context) {
 
   // insert saga import
   ignite.patchInFile(indexFilePath, {
-    after: "// Sagas",
+    after: '// Sagas',
     insert: importToAdd
   })
 
   ignite.patchInFile(indexFilePath, {
-    after: "    // some sagas only receive an action",
+    after: '    // some sagas only receive an action',
     insert: `    takeLatest(${sagaName}Types.${upperName}_REQUEST, get${sagaName}, api),`
   })
-
 
   if (!filesystem.exists(fixtureFilePath)) {
     const msg = `No '${fixtureFilePath}' file found.  Can't add to index.js.`
@@ -64,7 +63,7 @@ module.exports = async function (context) {
   }
 
   ignite.patchInFile(fixtureFilePath, {
-    after: "// Functions return fixtures",
+    after: '// Functions return fixtures',
     insert: `  get${sagaName}: () => { return { ok: true, data: "21" } }, `})
 
   if (!filesystem.exists(apiFilePath)) {
@@ -74,12 +73,12 @@ module.exports = async function (context) {
   }
 
   ignite.patchInFile(apiFilePath, {
-    after: "// Define API Constants",
+    after: '// Define API Constants',
     insert: crudToAdd
   })
 
   ignite.patchInFile(apiFilePath, {
-    after: "return {",
+    after: 'return {',
     insert: crudConsts
   })
 }

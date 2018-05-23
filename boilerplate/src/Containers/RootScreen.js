@@ -15,7 +15,7 @@ export class RootScreen extends React.Component {
   //  this.setState(newProps.something)
   // }
 
-  render() {
+  render () {
     return (
       <div style={{ flex: 1}}>
         <div>Hello There.</div>
