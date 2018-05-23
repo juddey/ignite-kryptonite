@@ -1,17 +1,11 @@
 import React from 'react'
-// import { Row, Col, Form, Input } from 'antd'
-// import R from 'ramda'
 // import { AComponentName } from '../Components'
 import { connect } from 'react-redux'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { injectIntl } from 'react-intl'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
-import messages from './Messages/<%= props.name %>Messages'
 
-// Styles
-import styles from './Styles/<%= props.name %>Style'
-
-export class <%= props.name %> extends React.Component {
+export class RootScreen extends React.Component {
   // constructor (props) {
   //   super(props)
   //   this.state = {}
@@ -23,8 +17,8 @@ export class <%= props.name %> extends React.Component {
 
   render() {
     return (
-      <div style={styles.container}>
-        <div><%= props.name %> Container</div>
+      <div style={{ flex: 1}}>
+        <div>Hello There.</div>
       </div>
     )
   }
@@ -40,5 +34,5 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  injectIntl(<%= props.name %>)
+  injectIntl(RootScreen)
 )

@@ -76,7 +76,7 @@ module.exports = async function (context) {
 
   // import into the router file too
   ignite.patchInFile(navPath, {
-    before: "from '../Containers'",
+    before: "RootScreen",
     insert: `  ${containerName},`
   })
 

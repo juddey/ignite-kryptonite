@@ -60,7 +60,7 @@ async function install (context) {
     throw e
   }
 
-  spinner.text = `Woot!  ${name} has been ignite-ified`
+  spinner.text = `Woot! ${name} has been ignite-ified`
   spinner.stop().succeed()
 
   // copy our App & Tests directories
@@ -84,7 +84,6 @@ async function install (context) {
   spinner.text = '▸ generating files from templates'
   spinner.start()
   const templates = [
-     { template: 'index.js.ejs', target: 'index.js' },
      { template: 'ignite/ignite.json.ejs', target: `ignite.js` },
      { template: 'package.json.ejs', target: `package.js` }
   ]
@@ -94,6 +93,14 @@ async function install (context) {
     quiet: true
   })
 
+  // Remove the src directory CRA added
+  filesystem.remove(`${APP_TEMP_PATH}/src`)
+
+  // And substitute our own.
+  filesystem.copy(`${PLUGIN_PATH}/boilerplate/src`, `${APP_TEMP_PATH}/src`, {
+    overwrite: true
+  })
+
   filesystem.copy(`${APP_PATH}/package.js`, `${APP_TEMP_PATH}/package.json`, {
     overwrite: true
   })
@@ -101,7 +108,7 @@ async function install (context) {
   filesystem.copy(`${APP_PATH}/ignite.js`, `${APP_TEMP_PATH}/ignite/ignite.json`, {
     overwrite: true
   })
-  spinner.text = 'generating files from templates'
+  spinner.text = 'generated files from templates'
 
   spinner.stop().succeed()
 
@@ -110,7 +117,7 @@ async function install (context) {
   spinner.text = '▸ installing dependencies with yarn'
   spinner.start()
   await system.run('yarn install')
-  spinner.text = 'installing dependencies with yarn'
+  spinner.text = 'installed dependencies with yarn'
   spinner.stop().succeed()
 
   // install any plugins, including ourselves if we have generators.
@@ -129,6 +136,7 @@ async function install (context) {
   filesystem.remove(`${APP_PATH}/ignite.js`)
   filesystem.remove(`${APP_PATH}/package.js`)
   filesystem.remove(`${APP_PATH}/bob`)
+  filesystem.remove(`${APP_PATH}/package-lock.json`)
   // console.log('Reading Path Ignite: ' + `${APP_TEMP_PATH}/ignite/ignite.json`)
   // console.log(filesystem.read(`${APP_TEMP_PATH}/ignite/ignite.json`))
 
@@ -141,7 +149,7 @@ async function install (context) {
     spinner.succeed()
   }
 
-  print.info('')
+  print.info('Woot! all done.')
   print.info('🍽 Installed!')
   print.info('')
   print.info(print.colors.yellow(`  cd ${name}`))

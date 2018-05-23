@@ -17,7 +17,7 @@ test('adds the proper npm module and component example', async t => {
   t.true(addModule.calledWith('react-native-MODULENAME', { link: true }))
   t.true(
     addPluginComponentExample.calledWith('ElectriniteExample.js', {
-      title: 'Electrinite Example'
+      title: 'Electronite Example'
     })
   )
 })
