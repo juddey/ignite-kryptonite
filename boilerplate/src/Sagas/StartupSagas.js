@@ -1,12 +1,12 @@
 // exported to make available for tests
-export const selectAvatar = (state) => state.github.avatar
+export const selectAvatar = state => state.github.avatar
 
 // process STARTUP actions
 // eslint-disable-next-line
-export function * startup (action) {
+export function* startup(action) {
   if (console.tron) {
     // straight-up string logging
-    console.tron.log('Hello, I\'m an example of how to log via Reactotron.')
+    console.tron.log("Hello, I'm an example of how to log via Reactotron.")
 
     // logging an object for better clarity
     console.tron.log({

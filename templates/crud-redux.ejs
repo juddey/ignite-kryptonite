@@ -22,9 +22,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  data: {
-    someKey: { value: null, validateStatus: null, help: null, errorKey: null},
-  },
+  data: {},
   fetching: null,
   payload: null,
   single: null,
@@ -39,16 +37,13 @@ export const request = (state, { data }) =>
   state.merge({ fetching: true, data, payload: null })
 
 // Or post it, straight out of Redux
-export const attempt = (state) =>
-  state.merge({ fetching: true, payload: null })
+export const attempt = state => state.merge({ fetching: true, payload: null })
 
 // or, Update it.
-export const update = (state) =>
-  state.merge({ fetching: true, payload: null })
+export const update = state => state.merge({ fetching: true, payload: null })
 
 // or, Delete it.
-export const remove = (state) =>
-  state.merge({ fetching: true })
+export const remove = state => state.merge({ fetching: true })
 
 // successful api lookup
 export const success = (state, action) => {

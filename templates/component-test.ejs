@@ -12,16 +12,24 @@ it('component exists', () => {
 })
 
 it('component structure', () => {
-  expect(wrapper.name()).toBe('div')
-  expect(wrapper.children().length).toBe(1)
-  expect(wrapper.children().first().name()).toBe('div')
-
-  expect(wrapper.children().first().containsMatchingElement('<%= props.name %> Component')).toBe(true)
+  expect(wrapper.name()).toEqual('div')
+  expect(wrapper.children().length).toEqual(1)
+  expect(
+    wrapper
+      .children()
+      .first()
+      .name()
+  ).toEqual('div')
+  expect(
+    wrapper
+      .children()
+      .first()
+      .containsMatchingElement('<%= props.name %> Component')
+    ).toEqual(true)
 })
 
 it('renders to snapshot', () => {
-  const tree = createComponentWithIntl(
-      <<%= props.name %> />, div).toJSON()
+  const tree = createComponentWithIntl(<<%= props.name %> />, div).toJSON()
   expect(tree).toMatchSnapshot()
 })
 

@@ -15,7 +15,7 @@ const create = () => {
     baseURL,
     // here are some default headers
     headers: {
-      'accept': 'application/vnd.api+json',
+      accept: 'application/vnd.api+json',
       'content-type': 'application/vnd.api+json'
     },
     // 10 second timeout...
@@ -36,6 +36,8 @@ const create = () => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
+
+  // Define API Constants
   const getUsers = () => api.get('users')
   // ------
   // STEP 3
@@ -50,7 +52,6 @@ const create = () => {
   // private scoped goodies in JavaScript.
   //
   return {
-    // a list of the API functions from step 2
     getUsers
   }
 }

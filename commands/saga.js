@@ -36,7 +36,7 @@ module.exports = async function (context) {
   const fixtureFilePath = `${process.cwd()}/src/Services/FixtureApi.js`
   const apiFilePath = `${process.cwd()}/src/Services/Api.js`
   const importToAdd = `import { get${sagaName} } from './${sagaName}Sagas'`
-  const crudToAdd = `  const get${initCapName} = data => api.get('${lowerName}s/' + data.id )`
+  const crudToAdd = `  const get${initCapName} = data => api.get('${lowerName}s/' + data.id)`
   const crudConsts = `    get${initCapName},`
 
   if (!filesystem.exists(indexFilePath)) {
@@ -64,7 +64,9 @@ module.exports = async function (context) {
 
   ignite.patchInFile(fixtureFilePath, {
     after: '// Functions return fixtures',
-    insert: `  get${sagaName}: () => { return { ok: true, data: "21" } }, `})
+    insert: `  get${sagaName}: () => { 
+    return { ok: true, data: "21" } 
+  }, `})
 
   if (!filesystem.exists(apiFilePath)) {
     const msg = `No '${fixtureFilePath}' file found.  Can't add to Fixtures/API.js.`

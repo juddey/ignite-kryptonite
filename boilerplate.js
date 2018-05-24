@@ -33,8 +33,8 @@ async function install (context) {
   // install create react app
   spinner.text = '▸ installing Create React App'
   spinner.start()
-  spinner.text = 'installed Create React App'
   await system.run('npm install create-react-app')
+  spinner.text = 'installed Create React App'
   spinner.stop().succeed()
 
   spinner.text = '▸ Running Create React App (60 seconds-ish :)'

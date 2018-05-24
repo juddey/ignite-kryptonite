@@ -4,6 +4,7 @@ module.exports = async function (context) {
   // grab some features
   const { parameters, strings, print, ignite, filesystem } = context
   const { pascalCase, isBlank } = strings
+  const config = ignite.loadIgniteConfig()
 
   // validation
   if (isBlank(parameters.first)) {
@@ -27,12 +28,15 @@ module.exports = async function (context) {
     {
       template: 'component-messages.ejs',
       target: `src/Components/Messages/${name}Messages.js`
-    },
-    {
-      template: 'component-test.ejs',
-      target: `src/__tests__/Components/${name}Test.js`
     }
   ]
+
+  if (config.tests) {
+    jobs.push({
+      template: 'component-test.ejs',
+      target: `src/__tests__/Components/${name}Test.js`
+    })
+  }
 
   await ignite.copyBatch(context, jobs, props)
 

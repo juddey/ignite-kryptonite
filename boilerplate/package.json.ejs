@@ -26,21 +26,27 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "precommit": "lint-staged",
+    "format": "prettier-standard 'src/**/*.js'",
+    "lint": "prettier-standard 'src/**/*.js'"
   },
   "devDependencies": {
     "format-json": "^1.0.3",
     "husky": "^0.14.3",
     "ignite-kryptonite": "file:/home/justin/projects/reactjs/ignite-kryptonite",
+    "jest": "20.0.3",
     "lint-staged": "^4.0.1",
     "prettier": "^1.5.3",
+    "prettier-standard": "^8.0.1",    
     "react-scripts": "1.0.10",
     "reactotron-react-js": "^1.11.1",
+    "react-test-renderer": "^15.5.4",
     "redux-mock-store": "^1.2.3"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
-      "prettier --single-quote --no-semi --write",
+      "prettier-standard --single-quote --no-semi",
       "git add"
     ]
   }

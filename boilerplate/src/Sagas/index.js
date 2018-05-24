@@ -3,10 +3,10 @@ import { takeLatest } from 'redux-saga/effects'
 // import FixtureAPI from '../Services/FixtureApi'
 // import DebugConfig from '../Config/DebugConfig'
 
-/* ------------- Types ------------- */
+// Types
 import { StartupTypes } from '../Redux/StartupRedux'
 
-/* ------------- Sagas ------------- */
+// Sagas
 import { startup } from './StartupSagas'
 
 /* ------------- API ------------- */

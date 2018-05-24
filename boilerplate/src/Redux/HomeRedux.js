@@ -39,9 +39,7 @@ export const failure = state =>
   state.merge({ fetching: false, error: true, payload: null })
 
 // Just storing some data, thanks.
-export const data = (state, { data }) =>
-  state.merge({ data }, {deep: true})
-
+export const data = (state, { data }) => state.merge({ data }, { deep: true })
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
