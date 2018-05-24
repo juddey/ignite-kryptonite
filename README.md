@@ -1,4 +1,4 @@
-## Ignite Kryptonite
+### Kryptonite
 
 Ignite for React-based Single Page Web Apps
 
@@ -42,8 +42,8 @@ Type ignite generate ________ to run one of these generators:
 Hey, that's cool. I don't mind. All I wanted was to get you started quickly, and help you avoid some of the pain I went through when setting up my projects. Feel free to `ignite spork` and follow your :nose:.
 
 ### TODO
-- [] Add testing with jest. Coming Soon!. :)
+- [ ] Add testing with jest. Coming Soon!. :)
 - [x] Write some integration tests. No, really. :)
 - [x] Add a proper boilerplate for ~~both~~ web ~~and electron~~ projects
-- [] Uninstall. Although, I am not sure why you'd want to leave.
+- [ ] Uninstall. Although, I am not sure why you'd want to leave.
 - [x] Live long and prosper. 🖖
