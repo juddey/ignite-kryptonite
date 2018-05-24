@@ -3,7 +3,7 @@
 module.exports = async function (context) {
   // grab some features
   const { parameters, ignite, print, strings, filesystem } = context
-  const { pascalCase, isBlank, upperCase, snakeCase, lowerCase, upperFirst } = strings
+  const { pascalCase, isBlank, upperCase, lowerCase, upperFirst } = strings
   const config = ignite.loadIgniteConfig()
 
   // validation

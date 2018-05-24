@@ -4,7 +4,7 @@ module.exports = async function (context) {
   // grab some features
   const { parameters, strings, print, ignite, filesystem } = context
   const { pascalCase, isBlank, lowerCase } = strings
-  const config = ignite.loadIgniteConfig()
+  // const config = ignite.loadIgniteConfig()
 
   // validation
   if (isBlank(parameters.first)) {

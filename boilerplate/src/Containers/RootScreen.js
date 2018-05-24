@@ -17,7 +17,7 @@ export class RootScreen extends React.Component {
 
   render () {
     return (
-      <div style={{ flex: 1}}>
+      <div style={{ flex: 1 }}>
         <div>Hello There.</div>
       </div>
     )

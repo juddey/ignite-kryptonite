@@ -17,6 +17,7 @@
   },
   "standard": {
     "parser": "babel-eslint",
+    "ignore": ["/commands/crudsaga.js"],
     "globals": [
       "__DEV__",
       "jasmine",
