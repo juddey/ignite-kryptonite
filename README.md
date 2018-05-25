@@ -47,3 +47,9 @@ Hey, that's cool. I don't mind. All I wanted was to get you started quickly, and
 - [x] Add a proper boilerplate for ~~both~~ web ~~and electron~~ projects
 - [ ] Uninstall. Although, I am not sure why you'd want to leave.
 - [x] Live long and prosper. 🖖
+
+### Thanks :heart: :clap:
+Shoutouts to: [infinite red](https://infinite.red/) for providing the fuel for this and, also, for being generally awesome. :tada:
+
+## License
+MIT © Justin Lane 2018
