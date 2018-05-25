@@ -30,4 +30,7 @@ test('writes the install files', async () => {
   const lint = await execa('yarn', ['-s', 'run', 'format'])
   expect(lint.stderr).toContain('files were unchanged')
   expect(lint.stderr).not.toContain('success formatting')
+  // Run a build, this will catch any glaring syntax errors.
+  const build = await execa('yarn', ['-s', 'run', 'build'])
+  expect(build.stderr).toEqual('')
 })

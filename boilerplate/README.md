@@ -21,7 +21,7 @@ A buncha cool stuff. These libraries:
   > To Finish
 
 ## Testing
-Pre-packed with jest templates, add the key `test: true` to your `ignite.json` and wonder will spill forth!
+Pre-packed with jest templates, add the key `tests: true` to your `ignite.json` and wonder will spill forth!
 
 
 

@@ -5,7 +5,7 @@ Ignite for React-based Single Page Web Apps
 #### Why?
 
  * you shouldn't need to be Superman (or Wonderwoman) to write a web app these days.
- * its fun to share stuff (but perhaps not :toothbrushes:)
+ * its fun to share stuff (but perhaps not toothbrushes)
  * I like to give back.
 
 ## Warning!!!!
