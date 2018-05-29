@@ -1,4 +1,4 @@
-import { Colors } from '../../Themes/'
+// import { Colors } from '../../Themes/'
 
 const styles = {
   container: {
