@@ -101,6 +101,10 @@ async function install (context) {
     overwrite: true
   })
 
+  filesystem.copy(`${PLUGIN_PATH}/boilerplate/.storybook`, `${APP_TEMP_PATH}/.storybook`, {
+    overwrite: true
+  })
+
   // Add a README
   filesystem.copy(`${PLUGIN_PATH}/boilerplate/README.md`, `${APP_TEMP_PATH}/README.md`, {
     overwrite: true

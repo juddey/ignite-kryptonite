@@ -30,6 +30,11 @@ test('writes the install files', async () => {
   const lint = await execa('yarn', ['-s', 'run', 'format'])
   expect(lint.stderr).toContain('files were unchanged')
   expect(lint.stderr).not.toContain('success formatting')
+  // Check for storybook.
+  expect(jetpack.exists('.storybook')).toEqual('dir')
+  expect(jetpack.exists('.storybook/addons.js')).toEqual('file')
+  expect(jetpack.exists('.storybook/config.js')).toEqual('file')
+  expect(jetpack.exists('src/Components/stories/index.js')).toEqual('file')
   // Run a build, this will catch any glaring syntax errors.
   const build = await execa('yarn', ['-s', 'run', 'build'])
   expect(build.stderr).toEqual('')

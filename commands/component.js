@@ -38,12 +38,23 @@ module.exports = async function (context) {
     })
   }
 
+  console.log(config)
+
+  if (config.storybooks) {
+    jobs.push({
+      template: 'component.story.ejs',
+      target: `src/Components/stories/${name}.story.js`
+    })
+  }
+
   await ignite.copyBatch(context, jobs, props)
 
   const componentName = name
   const indexFilePath = `${process.cwd()}/src/Components/index.js`
+  const storyFilePath = `${process.cwd()}/src/Components/stories/index.js`
   const importToAdd = `import ${componentName} from './${componentName}'`
   const exportToAdd = `  ${componentName},`
+  const storyToAdd = `import './${componentName}.story.js'`
 
   if (!filesystem.exists(indexFilePath)) {
     const msg = `No '${indexFilePath}' file found.  Can't add to index.js.`
@@ -51,7 +62,7 @@ module.exports = async function (context) {
     process.exit(1)
   }
 
-  // insert container import
+  // insert component import
   ignite.patchInFile(indexFilePath, {
     after: '// Component Index',
     insert: importToAdd
@@ -61,4 +72,12 @@ module.exports = async function (context) {
     after: 'export {',
     insert: exportToAdd
   })
+
+  // Add Storybooks.
+  if (config.storybooks) {
+    ignite.patchInFile(storyFilePath, {
+      after: '// Storybooks Index',
+      insert: storyToAdd
+    })
+  }
 }
