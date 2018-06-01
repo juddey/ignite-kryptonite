@@ -38,8 +38,6 @@ module.exports = async function (context) {
     })
   }
 
-  console.log(config)
-
   if (config.storybooks) {
     jobs.push({
       template: 'component.story.ejs',

@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { createComponentWithIntl, shallowWithIntl } from '../../../src/Support/Utils'
 import <%= props.name %> from '../../Components/<%= props.name %>'
 
@@ -27,7 +26,7 @@ test('component structure', () => {
   ).toEqual(true)
 })
 
-('renders to snapshot', () => {
+test('renders to snapshot', () => {
   const tree = createComponentWithIntl(<<%= props.name %> />, div).toJSON()
   expect(tree).toMatchSnapshot()
 })
