@@ -1,4 +1,4 @@
-// @cliDescription  Generates a redux smart component.
+// @cliDescription  Generates a container and test, hooked up to redux.
 
 module.exports = async function (context) {
   // grab some features

@@ -1,4 +1,4 @@
-// @cliDescription  Generates a action/creator/reducer set for Redux.
+// @cliDescription  Generates Redux scaffolding for CRUD, with optional tests.
 
 module.exports = async function (context) {
   // grab some features

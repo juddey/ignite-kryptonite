@@ -1,4 +1,4 @@
-// @cliDescription  Generates a component, styles, and an optional test.
+// @cliDescription  Generates a stateful component, styles, and optionally, storybooks and test.
 
 module.exports = async function (context) {
   // grab some features

@@ -38,12 +38,17 @@ describe('generators', () => {
     await execa(IGNITE, ['g', 'saga', 'Test'], { preferLocal: false })
     expect(jetpack.exists('src/Sagas/TestSagas.js')).toEqual('file')
     await execa('yarn', ['-s', 'run', 'format'])
+    const lint = await execa('yarn', ['-s', 'run', 'format'])
+    expect(lint.stderr).toContain('files were unchanged')
+    expect(lint.stderr).not.toContain('success formatting')
   })
 
   test('generate screen works', async () => {
     await execa(IGNITE, ['g', 'screen', 'TestScreen'], { preferLocal: false })
     expect(jetpack.exists('src/Containers/TestScreen.js')).toEqual('file')
     expect(jetpack.exists('src/Containers/Styles/TestScreenStyle.js')).toEqual('file')
-    await execa('yarn', ['-s', 'run', 'format'])
+    const lint = await execa('yarn', ['-s', 'run', 'format'])
+    expect(lint.stderr).toContain('files were unchanged')
+    expect(lint.stderr).not.toContain('success formatting')
   })
 })

@@ -1,4 +1,4 @@
-// @cliDescription  Generates a saga with an optional test.
+// @cliDescription  Generates Saga scaffolding for CRUD, with optional tests.
 
 module.exports = async function (context) {
   // grab some features
@@ -41,11 +41,11 @@ module.exports = async function (context) {
   const update${initCapName} = data => api.patch('${lowerName}s/' + data.id, { ${lowerName}: data })
   const remove${initCapName} = data => api.delete('${lowerName}s/' + data.id )
   const get${initCapName}s = data => api.get('${lowerName}s/')`
-  const crudConsts = `  get${initCapName},
-  get${initCapName}s,
-  post${initCapName},
-  update${initCapName},
-  remove${initCapName},`
+  const crudConsts = `    get${initCapName},
+      get${initCapName}s,
+      post${initCapName},
+      update${initCapName},
+      remove${initCapName},`
 
   if (!filesystem.exists(indexFilePath)) {
     const msg = `No '${indexFilePath}' file found.  Can't add to index.js.`
@@ -76,10 +76,10 @@ module.exports = async function (context) {
 
   ignite.patchInFile(fixtureFilePath, {
     after: '// Functions return fixtures',
-    insert: `  post${sagaName}: () => { return { ok: true, data: "21" } },
-  get${sagaName}: () => { return { ok: true, data: "21" } },
-  get${sagaName}s: () => { return { ok: true, data: "21" } },
-  update${sagaName}: () => { return { ok: true, data: "21" } },
+    insert: `  post${sagaName}: () => { return { ok: true, data: '21' } },
+  get${sagaName}: () => { return { ok: true, data: '21' } },
+  get${sagaName}s: () => { return { ok: true, data: '21' } },
+  update${sagaName}: () => { return { ok: true, data: '21' } },
   remove${sagaName}: () => { return { ok: true } },`
   })
 
@@ -89,7 +89,10 @@ module.exports = async function (context) {
     process.exit(1)
   }
 
-  ignite.patchsaga
+  ignite.patchInFile(apiFilePath, {
+    after: '// Define API Constants',
+    insert: crudToAdd
+  })
 
   ignite.patchInFile(apiFilePath, {
     after: 'return {',

@@ -1,24 +1,27 @@
 import FixtureAPI from '../../Services/FixtureApi'
 import { call, put, select } from 'redux-saga/effects'
-import { get<%= props.name %>,
+import { 
+  // get<%= props.name %>,
   get<%= props.name %>s,
   post<%= props.name %>,
   update<%= props.name %>,
-  remove<%= props.name %>,
+  // remove<%= props.name %>,
   theData,
-  theUserPrefs,
+  // theUserPrefs,
   transformedData,
   theMulti
 } from '../../Sagas/<%= props.name %>Sagas'
-import <%= props.name %>Actions, { INITIAL_STATE } from '../../Redux/<%= props.name %>Redux'
+import <%= props.name %>Actions from '../../Redux/<%= props.name %>Redux'
 import { mapAttributes, updateMulti, insertMulti } from '../../Transforms/TransformAttributes'
-import { getMessage, showSagaMessage } from '../../Translations/SagaMessages'
-import { okIDResponse } from '../Fixtures/Shared'
+import { showSagaMessage } from '../../Translations/SagaMessages'
 
+const okIDResponse = {
+  ok: true,
+  data: { data: { attributes: { id: 'someValue', name: 'Something' } } }
+}
 const action = { type: '<%= props.name %>',  data: { someKey: 'someValue' } }
-const dataFixture = INITIAL_STATE.data
 
-it ('calls the index action', () => {
+test('calls the index action', () => {
   let actual, response
 
   let saga = get<%= props.name %>s(FixtureAPI, action)
@@ -36,7 +39,7 @@ it ('calls the index action', () => {
   expect(saga.next().done).toEqual(true)
 })
 
-it ('calls the index action, but fails', () => {
+test('calls the index action, but fails', () => {
   let actual, response
 
   let saga = get<%= props.name %>s(FixtureAPI, action)
@@ -61,8 +64,8 @@ it ('calls the index action, but fails', () => {
 })
 
 
-it('posts successfully', () => {
-  let actual, response
+test('posts successfully', () => {
+  let actual
 
   let saga = post<%= props.name %>(FixtureAPI, action)
 
@@ -90,7 +93,7 @@ it('posts successfully', () => {
   expect(saga.next().done).toEqual(true)
 })
 
-it('posts, but the server returns an error', () => {
+test('posts, but the server returns an error', () => {
   let actual, response
 
   let saga = post<%= props.name %>(FixtureAPI, action)
@@ -111,7 +114,7 @@ it('posts, but the server returns an error', () => {
   expect(saga.next().done).toEqual(true)
 })
 
-it('patches/edits successfully', () => {
+test('patches/edits successfully', () => {
   let actual, response
 
   let saga = update<%= props.name %>(FixtureAPI, action)
@@ -146,7 +149,7 @@ it('patches/edits successfully', () => {
   expect(saga.next().done).toEqual(true)
 })
 
-it('patches/edits but fails with server error', () => {
+test('patches/edits but fails with server error', () => {
   let actual, response
 
   let saga = update<%= props.name %>(FixtureAPI, action)

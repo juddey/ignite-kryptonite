@@ -13,7 +13,7 @@ const initialState = {
 }
 const store = mockStore(initialState)
 
-it('renders to snapshot', () => {
+test('renders to snapshot', () => {
   const tree = createComponentWithIntl(
     <<%= props.name %> store={store} {...initialState} />
   ).toJSON()
